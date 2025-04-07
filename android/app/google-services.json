@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "894903813282",
+    "project_id": "fyppart1-bbb83",
+    "storage_bucket": "fyppart1-bbb83.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894903813282:android:267bccd6ad51b099d303fb",
+        "android_client_info": {
+          "package_name": "com.example.aiplant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcMGD2c4M6IuAK5SG0NXRSOLid2xmCuaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
