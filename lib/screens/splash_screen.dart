@@ -1,4 +1,4 @@
-import 'package:aiplant/screens/on_board_screen.dart';
+import 'package:aiplant/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (mounted) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const OnBoardScreen()),
+            MaterialPageRoute(builder: (context) => const WelcomeScreen()),
           );
         }
       });
