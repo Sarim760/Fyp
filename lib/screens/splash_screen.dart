@@ -31,18 +31,21 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/pic1.png',
-              width: 120,  // Slightly larger for better visibility
-              height: 120,
-              color: Colors.white,  // Ensures logo is white on green background
-              errorBuilder: (context, error, stackTrace) {
-                return const Icon(
-                  Icons.local_florist,  // Plant-themed error icon
-                  color: Colors.white,
-                  size: 120,
-                );
-              },
+            Hero(
+              tag: 'Logo_splash',
+              child: Image.asset(
+                'assets/images/pic1.png',
+                width: 120,  // Slightly larger for better visibility
+                height: 120,
+                color: Colors.white,  // Ensures logo is white on green background
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(
+                    Icons.local_florist,  // Plant-themed error icon
+                    color: Colors.white,
+                    size: 120,
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 20),
             const Text(

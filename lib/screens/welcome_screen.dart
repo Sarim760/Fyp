@@ -50,9 +50,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           children: [
             Row(
               children: [
-                 Image.asset('assets/images/pic1.png',
-                 height: 100.0,
-                 width: 100.0,
+                
+                 Hero(
+                  tag: 'Logo_splash',
+                   child: Image.asset('assets/images/pic1.png',
+                   height: 100.0,
+                   width: 100.0,
+                   ),
                  ),
                 const SizedBox(width: 20.0),
                 Expanded(
@@ -64,7 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     child: AnimatedTextKit(
                       animatedTexts: [
                         TypewriterAnimatedText(
-                          'AI Plant Diagnostic',
+                          'AI Plants Diagnostic',
                           speed: const Duration(milliseconds: 100),
                         ),
                       ],
@@ -92,7 +96,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RegidterUser (),
+                  builder: (context) => RegistrationScreen (),
                 ),
               ),
             ),
