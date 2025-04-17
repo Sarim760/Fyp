@@ -11,7 +11,13 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text("OnBoardScreen"),
+        child:Row(
+          children: [
+            Text(
+              "On-Board Screen"
+            ),
+          ],
+        ),
       ),
     );
   }
