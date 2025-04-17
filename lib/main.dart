@@ -21,7 +21,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: ThemeMode.system,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        // Add other dark theme configurations if needed
+      ),
+
       theme: ThemeData(
+        brightness: Brightness.light,
         primarySwatch: Colors.green,
         colorScheme: ColorScheme.light(
           primary: Color(0xFF2E7D32), // Deep botanical green
