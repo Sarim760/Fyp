@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.light(
           primary: Color(0xFF2E7D32), // Deep botanical green
           secondary: Color(0xFF8BC34A), // Leaf green
-          surface: Color(0xFFF5F5F5), // Light gray
+          background: Color(0xFFF5F5F5), // Light gray
         ),
         textTheme: TextTheme(
           headlineLarge: TextStyle(color: Color(0xFF212121)), // Dark gray text
