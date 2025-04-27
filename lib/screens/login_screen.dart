@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(12),  // Changed the border radius
       borderSide: BorderSide(color: theme.colorScheme.primary),
     );
 
@@ -81,19 +81,19 @@ class _LoginScreenState extends State<LoginScreen> {
               Hero(
                 tag: 'Logo_splash',
                 child: SizedBox(
-                  height: 200,
+                  height: 250,  // Increased height
                   child: Image.asset('assets/images/pic1.png'),
                 ),
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 50),  // Increased space between elements
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   hintText: 'Enter your email',
                   contentPadding: const EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 20,
+                    vertical: 18,  // Increased padding
+                    horizontal: 22,  // Increased padding
                   ),
                   border: border,
                   enabledBorder: border,
@@ -114,15 +114,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 18),  // Increased space between fields
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Enter your password',
                   contentPadding: const EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 20,
+                    vertical: 18,  // Increased padding
+                    horizontal: 22,  // Increased padding
                   ),
                   border: border,
                   enabledBorder: border,
@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 26),  // Increased space between fields
               _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : UIHelper.buildThemedButton(
