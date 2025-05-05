@@ -63,7 +63,65 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
             },
             children: pages.map((page) => onboardingpage(page: page)).toList(),
           ),
-
+          Positioned(
+            top: 40,
+            right: 20,
+            child: Visibility(
+              visible: currentPage != 2,
+              child: TextButton(
+                onPressed: _onSkipPressed,
+                child: Text(
+                  'Skip',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 40,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
+                AnimatedSmoothIndicator(
+                  activeIndex: currentPage,
+                  count: pages.length,
+                  effect: const ExpandingDotsEffect(
+                    activeDotColor: Colors.green,
+                    dotColor: Colors.grey,
+                    dotHeight: 8,
+                    dotWidth: 8,
+                    spacing: 10,
+                  ),
+                ),
+                if (currentPage == 2)
+                  Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    child: ElevatedButton(
+                      onPressed: _onSkipPressed,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Text(
+                        'Get Started',
+                        style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ],
       ),
     );
