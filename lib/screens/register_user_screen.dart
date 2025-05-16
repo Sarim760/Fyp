@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:aiplant/screens/welcome_screen.dart';
 import 'package:aiplant/ui_Helper/ui_helper.dart';
 
+
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
 

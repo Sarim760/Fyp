@@ -12,8 +12,6 @@ void main() async {
     messagingSenderId: "894903813282",
     projectId: "fyppart1-bbb83",
   ));
-  
-
   runApp( MyApp());
 }
 
@@ -25,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
         colorScheme: ColorScheme.light(
-          primary: Color(0xFF2E7D32), // Deep botanical green
+          primary: Color(0xFF2E7D33), // Deep botanical green
           secondary: Color(0xFF8BC34A), // Leaf green
           background: Color(0xFFF5F5F5), // Light gray
         ),

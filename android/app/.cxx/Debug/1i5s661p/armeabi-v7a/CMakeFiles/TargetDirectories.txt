@@ -1,0 +1,2 @@
+D:/New folder (5)/fyp/aiplant/android/app/.cxx/Debug/1i5s661p/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/New folder (5)/fyp/aiplant/android/app/.cxx/Debug/1i5s661p/armeabi-v7a/CMakeFiles/rebuild_cache.dir

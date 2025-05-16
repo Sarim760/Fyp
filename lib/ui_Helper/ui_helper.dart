@@ -6,6 +6,7 @@ class UIHelper {
     required BuildContext context,
     required TextEditingController controller,
     required String labelText,
+
     String? hintText,
     bool obscureText = false,
     TextInputType keyboardType = TextInputType.text,
@@ -64,6 +65,8 @@ class UIHelper {
   static MaterialButton buildThemedButton({
     required BuildContext context,
     required String text,
+    Color? textColor,
+     Widget? icon,
     required VoidCallback onPressed,
     Color? buttonColor,
     double minWidth = 200.0,
@@ -120,5 +123,6 @@ class UIHelper {
         ),
       ),
     );
-  }
+
+ }
 }

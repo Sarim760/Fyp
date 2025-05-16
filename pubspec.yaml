@@ -35,9 +35,20 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   animated_text_kit:
+  google_fonts:
   firebase_core:
   firebase_auth:
+  smooth_page_indicator:
+  shared_preferences:
   cloud_firestore:
+
+  flutter_signin_button:
+  image_picker:
+  pdf:
+  printing:
+  path_provider:
+  google_sign_in:
+  
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +74,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/pic1.png
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,5 +1,7 @@
 import 'package:aiplant/screens/welcome_screen.dart';
+import 'package:aiplant/screens/on_board_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -10,16 +12,26 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 3), () {
-        if (mounted) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-          );
-        }
-      });
-    });
+    _checkOnboardingStatus();
+  }
+
+  Future<void> _checkOnboardingStatus() async {
+    // Get the onboarding status from SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    final hasBoarded = prefs.getBool('isBoarded') ?? false;
+
+    // Wait for 3 seconds (splash duration)
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (!mounted) return;
+
+    // Navigate to appropriate screen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => hasBoarded ? const WelcomeScreen() : const OnBoardScreen(),
+      ),
+    );
   }
 
   @override
