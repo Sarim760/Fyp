@@ -102,7 +102,14 @@ class _HomePageState extends State<HomePage> {
               SlideEffect(
                 begin: const Offset(0, 1),
                 end: Offset.zero,
-                duration: 400.ms,
+                duration: 500.ms,
+                curve: Curves.easeInOut,
+                delay: 100.ms,
+              ),
+              FadeEffect(
+                begin: 0,
+                end: 1,
+                duration: 500.ms,
                 curve: Curves.easeInOut,
                 delay: 100.ms,
               ),
@@ -118,9 +125,16 @@ class _HomePageState extends State<HomePage> {
               SlideEffect(
                 begin: const Offset(0, 1),
                 end: Offset.zero,
-                duration: 400.ms,
+                duration: 500.ms,
                 curve: Curves.easeInOut,
-                delay: 200.ms,
+                delay: 150.ms,
+              ),
+              FadeEffect(
+                begin: 0,
+                end: 1,
+                duration: 500.ms,
+                curve: Curves.easeInOut,
+                delay: 150.ms,
               ),
             ],
             child: ListTile(
@@ -134,9 +148,16 @@ class _HomePageState extends State<HomePage> {
               SlideEffect(
                 begin: const Offset(0, 1),
                 end: Offset.zero,
-                duration: 400.ms,
+                duration: 500.ms,
                 curve: Curves.easeInOut,
-                delay: 300.ms,
+                delay: 200.ms,
+              ),
+              FadeEffect(
+                begin: 0,
+                end: 1,
+                duration: 500.ms,
+                curve: Curves.easeInOut,
+                delay: 200.ms,
               ),
             ],
             child: ListTile(
@@ -151,9 +172,16 @@ class _HomePageState extends State<HomePage> {
               SlideEffect(
                 begin: const Offset(0, 1),
                 end: Offset.zero,
-                duration: 400.ms,
+                duration: 500.ms,
                 curve: Curves.easeInOut,
-                delay: 400.ms,
+                delay: 250.ms,
+              ),
+              FadeEffect(
+                begin: 0,
+                end: 1,
+                duration: 500.ms,
+                curve: Curves.easeInOut,
+                delay: 250.ms,
               ),
             ],
             child: ListTile(
