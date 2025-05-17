@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     'Orange',
     'Peach',
     'Pepper',
-    'Poatao',
+    'Potato',
     'Raspberry',
     'Soybean',
     'Squash',
@@ -185,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                   );
                 }
               },
-            ),).delayed(const Duration(milliseconds: 400),),
+            ),).delayed(const Duration(milliseconds: 400),
           ),
         ],
       ),
