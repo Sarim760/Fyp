@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     'Orange',
     'Peach',
     'Pepper',
-    'Potatos',
+    'Potatoes',
     'Raspberry',
     'Soybean',
     'Squash',
