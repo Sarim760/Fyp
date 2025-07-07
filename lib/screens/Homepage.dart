@@ -197,12 +197,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                         (route) => false,
                   );
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  ScaffoldMessenger.of(_).showSnackBar(
                     const SnackBar(content: Text('Signed out successfully')),
                   );
                 } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error signing out: ${e.toString()}')),
+                  ScaffoldMessenger.of(_).showSnackBar(
+                    SnackBar(content: Text('Error occurred signing out: ${e.toString()}')),
                   );
                 }
               },
