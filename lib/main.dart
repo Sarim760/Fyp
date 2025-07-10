@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.light(
           primary: Color(0xFF2E7D32),
           secondary: Color(0xFF8BC34A),
-          surface: Color(0xFFF5F5F6),
+          surface: Color(0xFFF5F5F5),
         ),
         textTheme: TextTheme(
           headlineLarge: TextStyle(color: Color(0xFF212121)),
