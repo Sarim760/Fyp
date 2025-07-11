@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   final ImagePicker _picker = ImagePicker();
   final List<String> _plants = [
     'Apple',
-    'BlueBerry',
+    'BlueBerries',
     'Cherry',
     'Corn',
     'Grape',
