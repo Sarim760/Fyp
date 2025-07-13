@@ -1,5 +1,7 @@
-import 'package:aiplant/screens/on_board_screen.dart';
+import 'package:aiplant/screens/welcome.dart';
+import 'package:aiplant/screens/Onboard.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -10,16 +12,26 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 2), () {
-        if (mounted) {
-          // Navigator.pushReplacement(
-          //   context,
-          //   MaterialPageRoute(builder: (context) =>
-          // );
-        }
-      });
-    });
+    _checkOnboardingStatus();
+  }
+
+  Future<void> _checkOnboardingStatus() async {
+    // Get the onboarding status from SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    final hasBoarded = prefs.getBool('isBoarded') ?? false;
+
+    // Wait for 3 seconds (splash duration)
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (!mounted) return;
+
+    // Navigate to appropriate screen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => hasBoarded ? const WelcomeScreen() : const OnBoardScreen(),
+      ),
+    );
   }
 
   @override
@@ -31,18 +43,21 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/pic1.png',
-              width: 120,  // Slightly larger for better visibility
-              height: 120,
-              color: Colors.white,  // Ensures logo is white on green background
-              errorBuilder: (context, error, stackTrace) {
-                return const Icon(
-                  Icons.local_florist,  // Plant-themed error icon
-                  color: Colors.white,
-                  size: 120,
-                );
-              },
+            Hero(
+              tag: 'Logo_splash',
+              child: Image.asset(
+                'assets/images/pic1.png',
+                width: 120,  // Slightly larger for better visibility
+                height: 120,
+                color: Colors.white,  // Ensures logo is white on green background
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(
+                    Icons.local_florist,  // Plant-themed error icon
+                    color: Colors.white,
+                    size: 120,
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 20),
             const Text(
@@ -55,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 shadows: [
                   Shadow(  // Adds subtle text shadow for better readability
                     blurRadius: 4.0,
-                    color: Colors.black54,
+                    color: Colors.black26,
                     offset: Offset(2.0, 2.0),
                   ),
                 ],

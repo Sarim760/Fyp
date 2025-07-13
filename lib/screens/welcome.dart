@@ -1,0 +1,121 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/material.dart';
+import 'package:aiplant/screens/login.dart';
+import 'package:aiplant/screens/signup.dart';
+import 'package:flutter/services.dart';
+
+import '../helper/ui_helper.dart';
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({super.key});
+
+  @override
+  _WelcomeScreenState createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.decelerate,
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Scaffold(
+      backgroundColor: theme.colorScheme.background,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Hero(
+                  tag: 'Logo_splash',
+                  child: Image.asset(
+                    'assets/images/pic1.png',
+                    height: 100.0,
+                    width: 100.0,
+                  ),
+                ),
+                const SizedBox(width: 20.0),
+                Expanded(
+                  child: DefaultTextStyle(
+                    style: theme.textTheme.headlineMedium!.copyWith(
+                      fontWeight: FontWeight.w900,
+                      color: theme.colorScheme.onBackground,
+                    ),
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        TypewriterAnimatedText(
+                          'AI Plants Diagnostic',
+                          speed: const Duration(milliseconds: 100),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 48.0),
+
+            // Google Sign-In Button using flutter_signin_button
+
+            const SizedBox(height: 16.0),
+
+            // Login Button
+            UIHelper.buildThemedButton(
+              context: context,
+              text: 'Log In',
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
+              ),
+            ),
+            const SizedBox(height: 16.0),
+
+            // Register Button
+            UIHelper.buildThemedButton(
+              context: context,
+              text: 'Register',
+              buttonColor: theme.colorScheme.secondary,
+              onPressed: () {
+                HapticFeedback.vibrate();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RegistrationScreen(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

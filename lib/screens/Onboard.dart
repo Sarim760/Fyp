@@ -1,4 +1,5 @@
-import 'package:aiplant/screens/splash_screen.dart';
+import 'package:aiplant/screens/splash.dart';
+import 'package:aiplant/screens/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,7 +38,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
     saveData();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => SplashScreen()),
+      MaterialPageRoute(builder: (context) => WelcomeScreen()),
     );
   }
 
