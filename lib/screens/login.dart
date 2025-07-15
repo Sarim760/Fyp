@@ -1,14 +1,13 @@
 import 'package:aiplant/screens/Home.dart';
 import 'package:delightful_toast/delight_toast.dart';
 import 'package:delightful_toast/toast/components/toast_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/authentication_bloc.dart';
+import '../bloc/auth/authentication_bloc.dart';
 import '../helper/ui_helper.dart';
-import 'Home.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

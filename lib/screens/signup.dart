@@ -3,7 +3,7 @@ import 'package:delightful_toast/toast/components/toast_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/authentication_bloc.dart';
+import '../bloc/auth/authentication_bloc.dart';
 import '../helper/ui_helper.dart';
 import 'Home.dart';
 

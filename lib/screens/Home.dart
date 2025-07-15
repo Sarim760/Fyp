@@ -1,3 +1,4 @@
+import 'package:aiplant/widgets/Home_widget.dart';
 import 'package:aiplant/widgets/diagnosis.dart';
 import 'package:aiplant/screens/welcome.dart';
 import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/authentication_bloc.dart';
+import '../bloc/auth/authentication_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
 
 
   final _pages = <Widget>[
-    const Center(child: Text('People Page')),
+    HomeWidget(),
     const Center(child: Text('Cart Page',)),
     const Center(child: Text('Settings Page',)),
     const Center(child: Text('Favorites Page')),
