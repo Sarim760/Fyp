@@ -1,12 +1,17 @@
+import 'package:aiplant/screens/store/marketplace.dart';
+import 'package:aiplant/screens/cart/cart_screen.dart';
+import 'package:aiplant/widgets/Doctor.dart';
 import 'package:aiplant/widgets/Home_widget.dart';
 import 'package:aiplant/widgets/diagnosis.dart';
-import 'package:aiplant/screens/welcome.dart';
 import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
 import 'package:delightful_toast/delight_toast.dart';
 import 'package:delightful_toast/toast/components/toast_card.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import '../providers/cart_provider.dart';
 
 import '../bloc/auth/authentication_bloc.dart';
 
@@ -21,166 +26,210 @@ class _HomePageState extends State<HomePage> {
   DateTime? _lastPressed;
   int _currentIndex = 0;
 
-
   final _pages = <Widget>[
-    HomeWidget(),
-    const Center(child: Text('Cart Page',)),
-    const Center(child: Text('Settings Page',)),
-    const Center(child: Text('Favorites Page')),
+    const HomeWidget(),
+    const DoctorsScreen(),
+    const Marketplace(),
+    const Center(child: Text('Se'),)
+
   ];
   final _bottomBarController = BottomBarWithSheetController(initialIndex: 0);
 
   @override
+  void dispose() {
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
 
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text('Plant Diagnosis'),
-          backgroundColor: theme.colorScheme.primary,
-          foregroundColor: theme.colorScheme.onPrimary,
-          elevation: 0,
-        ),
-
-        drawer: _buildDrawer(context),
-        body: SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            child: IndexedStack(
-              index: _currentIndex,
-              children: _pages,
-            ),
-        ),
-        bottomNavigationBar: BottomBarWithSheet(
-          controller: _bottomBarController,
-
-          onSelectItem: (index) => setState(() => _currentIndex = index),// <- keep the same instance in State
-          bottomBarTheme: const BottomBarTheme(
-            mainButtonPosition: MainButtonPosition.middle,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-            ),
-            itemIconColor: Colors.grey,
-            itemTextStyle: TextStyle(color: Colors.grey, fontSize: 10),
-            selectedItemTextStyle: TextStyle(color: Colors.blue, fontSize: 10),
+    return  WillPopScope(
+        onWillPop: _onWillPop,
+        child: Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 12.0),
+                child: Consumer<CartProvider>(
+                  builder: (context, cart, _) {
+                    final count = cart.totalCount;
+                    return Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.shopping_cart),
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/cart');
+                          },
+                        ),
+                        if (count > 0)
+                          Positioned(
+                            right: 6,
+                            top: 6,
+                            child: Container(
+                              padding: const EdgeInsets.all(2),
+                              decoration: const BoxDecoration(
+                                color: Colors.red,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Text(
+                                count.toString(),
+                                style: const TextStyle(fontSize: 10, color: Colors.white),
+                              ),
+                            ),
+                          )
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-
-          sheetChild: Center(
-            child: Diagnosis()
+          drawer: _buildDrawer(context),
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: IndexedStack(
+                index: _currentIndex,
+                sizing: StackFit.expand,
+                children: _pages,
+              ),
+            ),
           ),
-          items: const [
-            BottomBarWithSheetItem(icon: Icons.home_filled),
-            BottomBarWithSheetItem(icon: Icons.shopping_cart),
-            BottomBarWithSheetItem(icon: Icons.settings),
-            BottomBarWithSheetItem(icon: Icons.favorite),
-          ],
+          bottomNavigationBar: BottomBarWithSheet(
+            controller: _bottomBarController,
+            onSelectItem: (index) => setState(() => _currentIndex = index),
+            bottomBarTheme: const BottomBarTheme(
+              mainButtonPosition: MainButtonPosition.middle,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+              ),
+              itemIconColor: Colors.grey,
+              itemTextStyle: TextStyle(color: Colors.grey, fontSize: 10),
+              selectedItemTextStyle: TextStyle(color: Colors.blue, fontSize: 10),
+            ),
+            sheetChild: Center(child: Diagnosis()),
+            items: const [
+              BottomBarWithSheetItem(icon: Icons.home_filled),
+              BottomBarWithSheetItem(icon: Icons.medical_services_outlined),
+              BottomBarWithSheetItem(icon: Icons.shop),
+              BottomBarWithSheetItem(icon: Icons.shopping_cart_sharp),
+            ],
+          ),
         ),
-      ),
+
     );
   }
 
   Widget _buildDrawer(BuildContext context) {
     final theme = Theme.of(context);
 
-    return FutureBuilder<Map<String, String?>>(
-      future: AuthenticationBloc.readAuth(), // reads token, username, email
-      builder: (_, snapshot) {
-        final data = snapshot.data ?? {};
-        final username = data['username'] ?? 'Guest';
-        final email = data['email'] ?? 'no-email@aiplant.com';
+    return FutureBuilder<Map<String, String?>?>(
+      future: AuthenticationBloc.readAuth(),
+      builder: (context, snapshot) {
+        final data = snapshot.data;
+        final username = data?['username'] ?? 'Guest';
+        final email = data?['email'] ?? 'no-email@aiplant.com';
 
         return Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              UserAccountsDrawerHeader(
-                accountName: Text(username),
-                accountEmail: Text(email),
-                currentAccountPicture: CircleAvatar(
-                  backgroundColor: theme.colorScheme.secondary,
-                  child: Text(
-                    username.isNotEmpty ? username[0].toUpperCase() : 'G',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: theme.colorScheme.onSecondary,
+          child: SafeArea(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                UserAccountsDrawerHeader(
+                  accountName: Text(username),
+                  accountEmail: Text(email),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundColor: theme.colorScheme.secondary,
+                    child: Text(
+                      username.isNotEmpty ? username[0].toUpperCase() : 'G',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: theme.colorScheme.onSecondary,
+                      ),
                     ),
                   ),
+                  decoration: BoxDecoration(color: theme.colorScheme.primary),
                 ),
-                decoration: BoxDecoration(color: theme.colorScheme.primary),
-              ),
-              ListTile(
-                leading: Icon(Icons.home, color: theme.colorScheme.primary),
-                title: const Text('Home'),
-                onTap: () => Navigator.pop(context),
-              ),
-              ListTile(
-                leading: Icon(Icons.history, color: theme.colorScheme.primary),
-                title: const Text('Diagnosis History'),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: Icon(Icons.settings, color: theme.colorScheme.primary),
-                title: const Text('Settings'),
-                onTap: () {},
-              ),
-              const Divider(),
-
-              /* ---------- Sign-out with BlocListener ---------- */
-              BlocListener<AuthenticationBloc, AuthenticationState>(
-                listener: (context, state) {
-                  if (state is AuthenticationInitial) {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (_) => const WelcomeScreen()),
-                      (_) => false,
-                    );
-                    DelightToastBar(
+                ListTile(
+                  leading: Icon(Icons.home, color: theme.colorScheme.primary),
+                  title: const Text('Home'),
+                  onTap: () => Navigator.pop(context),
+                ),
+                ListTile(
+                  leading: Icon(Icons.history, color: theme.colorScheme.primary),
+                  title: const Text('Diagnosis History'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.chat, color: theme.colorScheme.primary),
+                  title: const Text('Community Chat'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/chat');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.settings, color: theme.colorScheme.primary),
+                  title: const Text('Settings'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                const Divider(),
+                BlocListener<AuthenticationBloc, AuthenticationState>(
+                  listener: (context, state) {
+                    if (state is AuthenticationInitial) {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/welcome',
+                        (_) => false,
+                      );
+                      DelightToastBar(
                         autoDismiss: true,
                         animationDuration: Animate.defaultDuration,
                         builder: (context) => ToastCard(
-                                leading: Icon(
-                                  Icons.flutter_dash_sharp,
-                                  size: 28,
-                                ),
-                                title: Text('Signed out Successfully'))
-                            .animate()
-                            .scaleXY(
-                              begin: 1,
-                              end: 0.94,
-                              curve: Curves.easeInOut,
-                              duration: const Duration(milliseconds: 100),
-                            )).show(context);
-                  } else if (state is AuthenticationFailure) {
-                    DelightToastBar(
+                          leading: Icon(Icons.flutter_dash_sharp, size: 28),
+                          title: Text('Signed out Successfully'),
+                        ).animate().scaleXY(
+                          begin: 1,
+                          end: 0.94,
+                          curve: Curves.easeInOut,
+                          duration: const Duration(milliseconds: 100),
+                        ),
+                      ).show(context);
+                    } else if (state is AuthenticationFailure) {
+                      DelightToastBar(
                         autoDismiss: true,
                         animationDuration: Animate.defaultDuration,
                         builder: (context) => ToastCard(
-                                leading: Icon(
-                                  Icons.flutter_dash_sharp,
-                                  size: 28,
-                                ),
-                                title: Text(state.message))
-                            .animate()
-                            .scaleXY(
-                              begin: 1,
-                              end: 0.94,
-                              curve: Curves.easeInOut,
-                              duration: const Duration(milliseconds: 100),
-                            )).show(context);
-                  }
-                },
-                child: ListTile(
-                  leading: Icon(Icons.logout,
-                      color: Theme.of(context).colorScheme.error),
-                  title: const Text('Sign Out'),
-                  onTap: () =>
-                      context.read<AuthenticationBloc>().add(LoggedOut()),
+                          leading: Icon(Icons.flutter_dash_sharp, size: 28),
+                          title: Text(state.message),
+                        ).animate().scaleXY(
+                          begin: 1,
+                          end: 0.94,
+                          curve: Curves.easeInOut,
+                          duration: const Duration(milliseconds: 100),
+                        ),
+                      ).show(context);
+                    }
+                  },
+                  child: ListTile(
+                    leading: Icon(Icons.logout, color: theme.colorScheme.error),
+                    title: const Text('Sign Out'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.read<AuthenticationBloc>().add(LoggedOut());
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -191,27 +240,22 @@ class _HomePageState extends State<HomePage> {
     final now = DateTime.now();
     if (_lastPressed == null ||
         now.difference(_lastPressed!) > const Duration(seconds: 2)) {
-      // first back-press or too slow – show snack
       _lastPressed = now;
       DelightToastBar(
-          autoDismiss: true,
-          animationDuration: Animate.defaultDuration,
-          builder: (context) => ToastCard(
-                  leading: Icon(
-                    Icons.exit_to_app,
-                    size: 28,
-                  ),
-                  title: Text('Press back again to exit'))
-              .animate()
-              .scaleXY(
-                begin: 1,
-                end: 0.94,
-                curve: Curves.easeInOut,
-                duration: const Duration(milliseconds: 100),
-              )).show(context);
-
-      return false; // prevent pop
+        autoDismiss: true,
+        animationDuration: Animate.defaultDuration,
+        builder: (context) => ToastCard(
+          leading: Icon(Icons.exit_to_app, size: 28),
+          title: Text('Press back again to exit'),
+        ).animate().scaleXY(
+          begin: 1,
+          end: 0.94,
+          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 100),
+        ),
+      ).show(context);
+      return false;
     }
-    return true; // pop / exit app
+    return true;
   }
 }

@@ -19,7 +19,7 @@ class PdfReportService {
     // Load user's plant image
     final imageBytes = await plantImage.readAsBytes();
     final plantImagePw = pw.MemoryImage(imageBytes);
-
+//add navigation to talk to doctor
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,

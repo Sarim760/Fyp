@@ -1,7 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:aiplant/screens/login.dart';
-import 'package:aiplant/screens/signup.dart';
 import 'package:flutter/services.dart';
 
 import '../helper/ui_helper.dart';
@@ -16,7 +14,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -83,7 +80,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ),
             const SizedBox(height: 48.0),
 
-            // Google Sign-In Button using flutter_signin_button
 
             const SizedBox(height: 16.0),
 
@@ -91,9 +87,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             UIHelper.buildThemedButton(
               context: context,
               text: 'Log In',
-              onPressed: () => Navigator.push(
+              onPressed: () => Navigator.pushNamed(
                 context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()),
+                '/login',
               ),
             ),
             const SizedBox(height: 16.0),
@@ -105,11 +101,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               buttonColor: theme.colorScheme.secondary,
               onPressed: () {
                 HapticFeedback.vibrate();
-                Navigator.push(
+                Navigator.pushNamed(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => RegistrationScreen(),
-                  ),
+                  '/signup',
                 );
               },
             ),

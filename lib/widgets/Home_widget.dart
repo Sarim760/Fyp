@@ -16,7 +16,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             children: [
               ElevatedButton(
                   onPressed: () {
-
+                    Navigator.pushNamed(context, '/chat');
                   },
                   child: Text('Community')),
               SizedBox(

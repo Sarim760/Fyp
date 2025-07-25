@@ -1,9 +1,11 @@
-import 'package:aiplant/screens/welcome.dart';
-import 'package:aiplant/screens/Onboard.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../bloc/auth/authentication_bloc.dart';
+
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -20,18 +22,26 @@ class _SplashScreenState extends State<SplashScreen> {
     final prefs = await SharedPreferences.getInstance();
     final hasBoarded = prefs.getBool('isBoarded') ?? false;
 
-    // Wait for 3 seconds (splash duration)
-    await Future.delayed(const Duration(seconds: 3));
-
+    // Check for valid auth session (no fixed delay)
+    final auth = await AuthenticationBloc.readAuth();
+    bool isTokenValid = false;
+    if (auth != null) {
+      isTokenValid = await AuthenticationBloc.validateTokenWithBackend(auth['token']);
+    }
     if (!mounted) return;
-
-    // Navigate to appropriate screen
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => hasBoarded ? const WelcomeScreen() : const OnBoardScreen(),
-      ),
-    );
+    if (auth == null || !isTokenValid) {
+      // Token missing, expired, or invalid, go to login
+      Navigator.pushReplacementNamed(
+        context,
+        hasBoarded ? '/welcome' : '/onboard',
+      );
+    } else {
+      // Token valid, go to welcome/home
+      Navigator.pushReplacementNamed(
+        context,
+        hasBoarded ? '/home' : '/onboard',
+      );
+    }
   }
 
   @override

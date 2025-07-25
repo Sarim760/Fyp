@@ -1,5 +1,3 @@
-import 'package:aiplant/screens/splash.dart';
-import 'package:aiplant/screens/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,9 +34,9 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
 
   void _onSkipPressed() {
     saveData();
-    Navigator.pushReplacement(
+    Navigator.pushReplacementNamed(
       context,
-      MaterialPageRoute(builder: (context) => WelcomeScreen()),
+      '/welcome',
     );
   }
 
@@ -48,7 +46,6 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
 
 
     return Scaffold(
