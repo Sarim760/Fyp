@@ -1,5 +1,4 @@
 import 'package:aiplant/screens/store/marketplace.dart';
-import 'package:aiplant/screens/cart/cart_screen.dart';
 import 'package:aiplant/widgets/Doctor.dart';
 import 'package:aiplant/widgets/Home_widget.dart';
 import 'package:aiplant/widgets/diagnosis.dart';
@@ -14,6 +13,7 @@ import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 
 import '../bloc/auth/authentication_bloc.dart';
+import '../widgets/cart_bottom_sheet.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -50,41 +50,7 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             elevation: 0,
             actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 12.0),
-                child: Consumer<CartProvider>(
-                  builder: (context, cart, _) {
-                    final count = cart.totalCount;
-                    return Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.shopping_cart),
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/cart');
-                          },
-                        ),
-                        if (count > 0)
-                          Positioned(
-                            right: 6,
-                            top: 6,
-                            child: Container(
-                              padding: const EdgeInsets.all(2),
-                              decoration: const BoxDecoration(
-                                color: Colors.red,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Text(
-                                count.toString(),
-                                style: const TextStyle(fontSize: 10, color: Colors.white),
-                              ),
-                            ),
-                          )
-                      ],
-                    );
-                  },
-                ),
-              ),
+              // Cart button removed from app bar
             ],
           ),
           drawer: _buildDrawer(context),
@@ -98,6 +64,51 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+          floatingActionButton: _currentIndex == 2
+              ? Consumer<CartProvider>(
+                  builder: (context, cart, _) {
+                    final count = cart.totalCount;
+                    return Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        FloatingActionButton(
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) => const CartBottomSheet(),
+                            );
+                          },
+                          child: const Icon(Icons.shopping_cart),
+                        ),
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          transitionBuilder: (child, anim) => ScaleTransition(scale: anim, child: child),
+                          child: count > 0
+                              ? Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  child: Container(
+                                    key: ValueKey(count),
+                                    padding: const EdgeInsets.all(4),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.red,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Text(
+                                      count.toString(),
+                                      style: const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
+                        ),
+                      ],
+                    );
+                  },
+                )
+              : null,
           bottomNavigationBar: BottomBarWithSheet(
             controller: _bottomBarController,
             onSelectItem: (index) => setState(() => _currentIndex = index),

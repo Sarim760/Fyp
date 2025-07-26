@@ -53,7 +53,7 @@ class medicine {
   }
 
   medicine copyWith({
-    dynamic? id,
+    dynamic id,
     String? title,
     double? price,
     String? description,

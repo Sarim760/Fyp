@@ -1,7 +1,6 @@
 import 'package:aiplant/bloc/auth/authentication_bloc.dart';
 import 'package:aiplant/providers/product_provider.dart';
 import 'package:aiplant/providers/cart_provider.dart';
-import 'package:aiplant/screens/cart/cart_screen.dart';
 import 'package:aiplant/screens/Home.dart';
 import 'package:aiplant/screens/Onboard.dart';
 import 'package:aiplant/screens/validation/login.dart';
@@ -25,25 +24,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-        ChangeNotifierProvider(
-          create: (context) => ProductProvider()..initialize(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => CartProvider()..refreshCart(),
-        ),
+          ChangeNotifierProvider(
+            create: (context) => ProductProvider()..initialize(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => CartProvider()..refreshCart(),
+          ),
           BlocProvider(create: (context) => AuthenticationBloc()),
         ],
         child: MaterialApp(
           initialRoute: '/splash',
           routes: {
-            '/splash': (context) => SplashScreen(),
-            '/onboard': (context) => OnBoardScreen(),
-            '/welcome': (context) => WelcomeScreen(),
-            '/login': (context) => LoginScreen(),
-            '/signup': (context) => RegistrationScreen(),
-            '/home': (context) => HomePage(),
-            '/chat': (context) => ChatPage(),
-            '/cart': (context) => const CartScreen(),
+            '/splash': (context) => const SplashScreen(),
+            '/onboard': (context) => const OnBoardScreen(),
+            '/welcome': (context) => const WelcomeScreen(),
+            '/login': (context) => const LoginScreen(),
+            '/signup': (context) => const RegistrationScreen(),
+            '/home': (context) => const HomePage(),
+            '/chat': (context) => const ChatPage(),
           },
           theme: ThemeData(
             primarySwatch: Colors.green,

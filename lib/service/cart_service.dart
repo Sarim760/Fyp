@@ -89,4 +89,23 @@ class CartService {
     );
     return response.statusCode == 200;
   }
+
+  /// Decrement the quantity of an item in the authenticated user's cart by 1.
+  /// If the quantity becomes 0, the item is removed.
+  Future<bool> decrementItemQuantity({required String itemId}) async {
+    final auth = await AuthenticationBloc.readAuth();
+    final token = auth?['token'];
+    if (token == null) {
+      throw Exception('User not authenticated. Please log in to update your cart.');
+    }
+
+    final response = await _dio.patch(
+      '$_baseUrl/cart/decrement/$itemId',
+      options: Options(headers: {
+        'Authorization': 'Bearer $token',
+      }),
+    );
+
+    return response.statusCode == 200;
+  }
 } 

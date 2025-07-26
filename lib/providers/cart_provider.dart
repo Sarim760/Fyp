@@ -40,6 +40,46 @@ class CartProvider with ChangeNotifier {
     }
   }
 
+  Future<void> decrementItem(String itemId) async {
+    try {
+      final ok = await _service.decrementItemQuantity(itemId: itemId);
+      if (ok) {
+        final index = _items.indexWhere((element) => element.product.id.toString() == itemId);
+        if (index != -1) {
+          if (_items[index].quantity > 1) {
+            _items[index].quantity -= 1;
+          } else {
+            _items.removeAt(index);
+          }
+          notifyListeners();
+        }
+      }
+    } catch (e) {
+      _error = e.toString();
+      notifyListeners();
+    }
+  }
+
+  Future<void> incrementItem(String itemId) async {
+    try {
+      final ok = await _service.addItemToCart(itemId: itemId, quantity: 1);
+      if (ok) {
+        final index = _items.indexWhere((element) => element.product.id.toString() == itemId);
+        if (index != -1) {
+          _items[index].quantity += 1;
+          notifyListeners();
+        }
+      }
+    } catch (e) {
+      _error = e.toString();
+      notifyListeners();
+    }
+  }
+
+  Future<void> removeItemBySwipe(String itemId) async {
+    await removeItem(itemId);
+  }
+
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();

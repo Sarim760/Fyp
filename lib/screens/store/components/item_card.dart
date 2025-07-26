@@ -4,7 +4,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../../helper/constants.dart';
 import '../../../model/medicine.dart';
 import '../../../widgets/favorite_button.dart';
-import '../../med_details/details_screen.dart';
 
 class ItemCard extends StatelessWidget {
   const ItemCard({super.key, required this.product, required this.press});
