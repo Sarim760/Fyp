@@ -57,6 +57,9 @@ dependencies:
   socket_io_client: ^3.1.2
   cached_network_image: ^3.3.1
   flutter_cache_manager: ^3.3.1
+  flutter_chat_ui: ^1.6.12
+  flutter_chat_types: ^3.6.2
+  uuid: ^4.3.3
 
 dev_dependencies:
   flutter_test:

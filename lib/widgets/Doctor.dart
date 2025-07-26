@@ -1,7 +1,7 @@
 import 'package:aiplant/model/doctor.dart';
 import 'package:flutter/material.dart';
 import '../repo/doctor.dart' as repo;
-import '../screens/chat/doctor_chat.dart';
+import '../screens/chat/doctor_chat_screen.dart';
 
 class DoctorsScreen extends StatefulWidget {
   const DoctorsScreen({super.key});
@@ -146,7 +146,10 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DoctorChatPage(doctor: doctor),
+                      builder: (context) => DoctorChatScreen(
+                  doctorId: doctor.id,
+                  doctorName: doctor.name,
+                ),
                     ),
                   );
                 },
@@ -254,7 +257,10 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => DoctorChatPage(doctor: doctor),
+                                  builder: (context) => DoctorChatScreen(
+                  doctorId: doctor.id,
+                  doctorName: doctor.name,
+                ),
                                 ),
                               );
                             },

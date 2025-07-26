@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/chat/doctor_chat_screen.dart';
 
 
 class HomeWidget extends StatefulWidget {
@@ -24,8 +25,15 @@ class _HomeWidgetState extends State<HomeWidget> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (_) => DoctorChatPage(doctorId: '1')));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const DoctorChatScreen(
+                          doctorId: '1',
+                          doctorName: 'John Doe',
+                        ),
+                      ),
+                    );
                   },
                   child: Text('Doctor')),
             ],
