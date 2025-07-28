@@ -1,4 +1,4 @@
-class Doctor_model {
+class Doctor_Model {
   final String id;
   final String name;
   final String specialization;
@@ -7,7 +7,7 @@ class Doctor_model {
   final String chatId;
   final DateTime createdAt;
 
-  Doctor_model({
+  Doctor_Model({
     required this.id,
     required this.name,
     required this.specialization,
@@ -17,7 +17,7 @@ class Doctor_model {
     required this.createdAt,
   });
 
-  factory Doctor_model.fromJson(Map<String, dynamic> json) => Doctor_model(
+  factory Doctor_Model.fromJson(Map<String, dynamic> json) => Doctor_Model(
         id: json['_id'] ?? json['id'],
         name: json['name'],
         specialization: json['specialization'],

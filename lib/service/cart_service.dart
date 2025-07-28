@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import '../helper/Global_variables.dart';
+import '../helper/global_variables.dart';
 import '../bloc/auth/authentication_bloc.dart';
 import '../model/cart_item.dart';
 
 class CartService {
   final Dio _dio = Dio();
-  final String _baseUrl = globalvariables().apiString;
+  final String _baseUrl = GlobalVariables().apiString;
 
   /// Adds an item to the authenticated user's cart.
   /// Returns `true` when the backend responds with HTTP 201 (Created).

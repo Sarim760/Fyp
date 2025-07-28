@@ -22,7 +22,6 @@ class medicine {
   });
 
   factory medicine.fromJson(Map<String, dynamic> json) {
-    // Support both fakestoreapi and backend formats
     final dynamic id = json['id'] ?? json['_id'];
     final String title = json['title'] ?? json['name'] ?? '';
     final String image = json['image'] ?? json['imageUrl'] ?? '';

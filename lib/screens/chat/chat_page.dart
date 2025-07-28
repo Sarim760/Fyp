@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import '../../helper/Global_variables.dart';
+import '../../helper/global_variables.dart';
 import '../../bloc/auth/authentication_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
@@ -103,7 +103,7 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {
       currentUser = ChatUser(id: userId ?? 'user', firstName: username ?? 'You');
     });
-    final url = globalvariables().localhost;
+    final url = GlobalVariables().localhost;
     socket = IO.io(
       '$url/community',
       IO.OptionBuilder()
@@ -265,7 +265,7 @@ class _ChatPageState extends State<ChatPage> {
       final file = File(pickedFile.path);
       final fileName = pickedFile.name;
       try {
-        final url = globalvariables().localhost;
+        final url = GlobalVariables().localhost;
         final formData = FormData.fromMap({
           'file': await MultipartFile.fromFile(file.path, filename: fileName),
         });

@@ -1,11 +1,11 @@
 import 'package:http/http.dart' as http;
 
 import '../model/medicine.dart';
-import '../helper/Global_variables.dart';
+import '../helper/global_variables.dart';
 
 class ApiService {
   // Base URL now fetched from global variables pointing to local backend
-  final String baseUrl = globalvariables().localhost;
+  final String baseUrl = GlobalVariables().localhost;
 
   Future<List<medicine>> getProducts() async {
     try {

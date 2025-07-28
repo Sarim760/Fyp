@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import '../helper/Global_variables.dart';
+import '../helper/global_variables.dart';
 import '../bloc/auth/authentication_bloc.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class DoctorChatService {
   final Dio _dio = Dio();
-  final String _baseUrl = globalvariables().apiString;
+  final String _baseUrl = GlobalVariables().apiString;
 
   /// Fetch chat history between user and doctor
   Future<List<types.Message>> fetchChatHistory(String doctorId) async {

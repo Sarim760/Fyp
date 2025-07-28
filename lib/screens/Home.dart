@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 
 import '../bloc/auth/authentication_bloc.dart';
-import '../widgets/cart_bottom_sheet.dart';
+import '../widgets/cart/cart_bottom_sheet.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     const HomeWidget(),
     const DoctorsScreen(),
     const Marketplace(),
-    const Center(child: Text('Se'),)
+    const Center(child: Text('Settings'),)
 
   ];
   final _bottomBarController = BottomBarWithSheetController(initialIndex: 0);

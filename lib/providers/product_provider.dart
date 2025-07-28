@@ -39,7 +39,6 @@ class ProductProvider with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _error = e.toString();
-      print('Error fetching products: $_error');
     } finally {
       _setLoading(false);
     }
@@ -52,7 +51,7 @@ class ProductProvider with ChangeNotifier {
       _categories = ['all', ...categories];
       notifyListeners();
     } catch (e) {
-      print('Error fetching categories: $e');
+      
     }
   }
 
@@ -66,7 +65,6 @@ class ProductProvider with ChangeNotifier {
       
       notifyListeners();
     } catch (e) {
-      print('Error loading favorites: $e');
     }
   }
 
@@ -89,7 +87,6 @@ class ProductProvider with ChangeNotifier {
       
       notifyListeners();
     } catch (e) {
-      print('Error toggling favorite: $e');
     }
   }
 

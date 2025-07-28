@@ -16,27 +16,27 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Available Doctors',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Connect with our plant health experts',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey[600],
-                ),
-              ),
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.all(16.0),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Text(
+        //         'Available Doctors',
+        //         style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //       const SizedBox(height: 8),
+        //       Text(
+        //         'Connect with our plant health experts',
+        //         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+        //           color: Colors.grey[600],
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         Expanded(
           child: _buildDoctorsList(),
         ),
@@ -45,7 +45,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
   }
 
   Widget _buildDoctorsList() {
-    return FutureBuilder<List<Doctor_model>>(
+    return FutureBuilder<List<Doctor_Model>>(
       future: repo.DoctorRepo.getAllDoctors(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -106,7 +106,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
               children: [
                 const Icon(
                   Icons.person_off,
-                  size: 60,
+                  size: 40,
                   color: Colors.grey,
                 ),
                 const SizedBox(height: 16),
@@ -115,12 +115,6 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  'Please check back later',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[600],
-                  ),
-                ),
               ],
             ),
           );

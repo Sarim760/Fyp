@@ -1,4 +1,4 @@
-import 'package:aiplant/helper/Global_variables.dart';
+import 'package:aiplant/helper/global_variables.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +71,7 @@ class AuthenticationBloc
 
       try {
         final response =
-            await dio.post('${globalvariables().apiString}/auth/signup', data: {
+            await dio.post('${GlobalVariables().apiString}/auth/signup', data: {
           'email': email,
           'username': username,
           'password': password,
@@ -105,7 +105,7 @@ class AuthenticationBloc
 
       try {
         final response =
-            await dio.post('${globalvariables().apiString}/auth/login', data: {
+            await dio.post('${GlobalVariables().apiString}/auth/login', data: {
           'email': email,
           'password': password,
         });
@@ -135,7 +135,7 @@ class AuthenticationBloc
     try {
       final dio = Dio();
       final response = await dio.get(
-        '${globalvariables().apiString}/auth/validate',
+        '${GlobalVariables().apiString}/auth/validate',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
       return response.statusCode == 200 && response.data['valid'] == true;

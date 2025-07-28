@@ -5,7 +5,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:uuid/uuid.dart';
 import '../../service/doctor_chat_service.dart';
 import '../../bloc/auth/authentication_bloc.dart';
-import '../../helper/Global_variables.dart';
+import '../../helper/global_variables.dart';
 
 class DoctorChatScreen extends StatefulWidget {
   final String doctorId;
@@ -43,7 +43,7 @@ class _DoctorChatScreenState extends State<DoctorChatScreen> {
 
     _user = types.User(id: userId);
 
-    final baseUrl = globalvariables().localhost;
+    final baseUrl = GlobalVariables().localhost;
     socket = IO.io(
       '$baseUrl/private',
       IO.OptionBuilder()
