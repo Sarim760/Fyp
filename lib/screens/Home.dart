@@ -6,7 +6,7 @@ import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
 import 'package:delightful_toast/delight_toast.dart';
 import 'package:delightful_toast/toast/components/toast_card.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -25,35 +25,80 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   DateTime? _lastPressed;
   int _currentIndex = 0;
+  final _advancedDrawerController = AdvancedDrawerController();
 
   final _pages = <Widget>[
     const HomeWidget(),
     const DoctorsScreen(),
     const Marketplace(),
     const Center(child: Text('Settings'),)
-
   ];
   final _bottomBarController = BottomBarWithSheetController(initialIndex: 0);
 
   @override
   void dispose() {
-
+    _advancedDrawerController.dispose();
     super.dispose();
+  }
+
+  void _handleMenuButtonPressed() {
+    _advancedDrawerController.showDrawer();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    return  WillPopScope(
+    return AdvancedDrawer(
+      backdrop: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.secondary],
+          ),
+        ),
+      ),
+      controller: _advancedDrawerController,
+      animationCurve: Curves.easeInOut,
+      animationDuration: const Duration(milliseconds: 300),
+      animateChildDecoration: true,
+      rtlOpening: false,
+      disabledGestures: false,
+      childDecoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
+      ),
+      drawer: _buildDrawer(context),
+      child: WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
           appBar: AppBar(
             elevation: 0,
-            actions: [
-              // Cart button removed from app bar
-            ],
+            leading: IconButton(
+              onPressed: _handleMenuButtonPressed,
+              icon: ValueListenableBuilder<AdvancedDrawerValue>(
+                valueListenable: _advancedDrawerController,
+                builder: (_, value, __) {
+                  return AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    child: Icon(
+                      value.visible ? Icons.clear : Icons.menu,
+                      key: ValueKey<bool>(value.visible),
+                    ),
+                  );
+                },
+              ),
+            ),
+            actions: [],
           ),
-          drawer: _buildDrawer(context),
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -131,7 +176,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-
+      ),
     );
   }
 
