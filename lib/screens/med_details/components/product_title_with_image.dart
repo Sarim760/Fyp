@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+
+import '../../../helper/constants.dart';
+import '../../../model/medicine.dart';
+
+class ProductTitleWithImage extends StatelessWidget {
+  const ProductTitleWithImage({super.key, required this.product});
+
+  final medicine product;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            product.category.toUpperCase(),
+            style: const TextStyle(color: Colors.black54),
+          ),
+          Text(
+            product.title,
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: kDefaultPaddin),
+          Row(
+            children: <Widget>[
+              RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan(text: "Price\n"),
+                    TextSpan(
+                      text: "\$${product.price.toStringAsFixed(2)}",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: kDefaultPaddin),
+              Expanded(
+                child: Hero(
+                  tag: "${product.id}",
+                  child: Image.network(
+                    product.image,
+                    fit: BoxFit.contain,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Center(
+                        child: Icon(
+                          Icons.error_outline,
+                          color: Colors.red,
+                          size: 60,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
