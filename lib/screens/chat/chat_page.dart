@@ -313,6 +313,11 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void dispose() {
+    socket?.off('communityMessage');
+    socket?.off('roomUsers');
+    socket?.off('typing');
+    socket?.off('stopTyping');
+    socket?.disconnect();
     socket?.dispose();
     _controller.dispose();
     super.dispose();
@@ -322,6 +327,14 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            socket?.disconnect();
+            socket?.dispose();
+            Navigator.pushReplacementNamed(context, '/home');
+          },
+        ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

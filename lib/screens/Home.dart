@@ -51,12 +51,8 @@ class _HomePageState extends State<HomePage> {
       backdrop: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.secondary],
-          ),
+        decoration: const BoxDecoration(
+          color: Colors.white,
         ),
       ),
       controller: _advancedDrawerController,
@@ -82,6 +78,13 @@ class _HomePageState extends State<HomePage> {
         child: Scaffold(
           appBar: AppBar(
             elevation: 0,
+            title: Text(
+              _currentIndex == 0 ? 'Home' :
+              _currentIndex == 1 ? 'Doctors' :
+              _currentIndex == 2 ? 'Store' :
+              'Settings',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
             leading: IconButton(
               onPressed: _handleMenuButtonPressed,
               icon: ValueListenableBuilder<AdvancedDrawerValue>(
@@ -182,6 +185,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildDrawer(BuildContext context) {
     final theme = Theme.of(context);
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder<Map<String, String?>?>(
       future: AuthenticationBloc.readAuth(),
@@ -198,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.primary,
+                    color: Colors.white,
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(24),
                       bottomRight: Radius.circular(24),
@@ -222,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         username,
                         style: theme.textTheme.titleLarge?.copyWith(
-                          color: theme.colorScheme.onPrimary,
+                          color: Colors.black87,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -230,7 +234,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         email,
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onPrimary.withOpacity(0.8),
+                          color: Colors.black54,
                         ),
                       ),
                     ],
