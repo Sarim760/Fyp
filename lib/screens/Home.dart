@@ -267,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                         title: 'Community Chat',
                         theme: theme,
                         onTap: () {
-                          Navigator.pop(context);
+
                           Navigator.pushNamed(context, '/chat');
                         },
                       ),
