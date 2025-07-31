@@ -51,7 +51,7 @@ class ProductProvider with ChangeNotifier {
       _categories = ['all', ...categories];
       notifyListeners();
     } catch (e) {
-      
+      //
     }
   }
 
@@ -65,6 +65,7 @@ class ProductProvider with ChangeNotifier {
       
       notifyListeners();
     } catch (e) {
+      //
     }
   }
 
@@ -87,6 +88,7 @@ class ProductProvider with ChangeNotifier {
       
       notifyListeners();
     } catch (e) {
+      //
     }
   }
 

@@ -1,9 +1,8 @@
 import 'package:aiplant/widgets/diagnosis.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../helper/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import '../../screens/appointments/appointments_screen.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -241,6 +240,11 @@ class _HomeWidgetState extends State<HomeWidget> {
         'icon': Icons.calendar_today,
         'color': Colors.orange.shade100,
       },
+      {
+        'title': 'Appointments',
+        'icon': Icons.medical_services,
+        'color': Colors.purple.shade100,
+      },
     ];
 
     return LayoutBuilder(
@@ -285,6 +289,13 @@ class _HomeWidgetState extends State<HomeWidget> {
               backgroundColor: Colors.transparent,
               builder: (context) => const Diagnosis(),
             );
+          } else if (title == 'Appointments') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AppointmentsScreen()),
+            );
+          } else if (title == 'Plant Care') {
+            // Handle Plant Care action
           }
         },
         borderRadius: BorderRadius.circular(16),

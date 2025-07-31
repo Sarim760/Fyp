@@ -1,7 +1,12 @@
 import 'package:aiplant/model/doctor.dart';
 import 'package:flutter/material.dart';
+import '../model/appointment.dart';
 import '../repo/doctor.dart' as repo;
 import '../screens/chat/doctor_chat_screen.dart';
+import '../service/appointment_service.dart';
+import 'package:intl/intl.dart';
+import '../screens/appointments/appointments_screen.dart';
+import '../screens/appointments/book_appointment_screen.dart';
 
 class DoctorsScreen extends StatefulWidget {
   const DoctorsScreen({super.key});
@@ -11,6 +16,8 @@ class DoctorsScreen extends StatefulWidget {
 }
 
 class _DoctorsScreenState extends State<DoctorsScreen> {
+  
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -246,25 +253,104 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                               ],
                             ),
                           ),
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DoctorChatScreen(
-                  doctorId: doctor.id,
-                  doctorName: doctor.name,
-                ),
+                          Row(
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => BookAppointmentScreen(doctor: doctor),
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(Icons.calendar_today),
+                                label: const Text('Book'),
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
-                              );
-                            },
-                            icon: const Icon(Icons.chat_outlined),
-                            label: const Text('Chat Now'),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
                               ),
-                            ),
+                              const SizedBox(width: 8),
+                              ElevatedButton.icon(
+                                onPressed: () async {
+                                  // Check if user has an active appointment with this doctor
+                                  final appointmentService = AppointmentService();
+                                  final hasActiveAppointment = await appointmentService.hasActiveAppointmentWithDoctor(doctor.id);
+                                  
+                                  if (hasActiveAppointment) {
+                                    // Check if the appointment time is current (within 15 minutes of scheduled time)
+                                    final now = DateTime.now();
+                                    final appointments = await appointmentService.getUserAppointments();
+                                    
+                                    // Find the confirmed appointment with this doctor
+                                    Appointment? activeAppointment;
+                                    try {
+                                      activeAppointment = appointments.firstWhere(
+                                        (appointment) {
+                                          final appointmentDoctorId = appointment.doctorId is String 
+                                            ? appointment.doctorId 
+                                            : (appointment.doctorId is Map ? appointment.doctorId['_id'] : null);
+                                          return appointmentDoctorId == doctor.id && appointment.status == 'confirmed';
+                                        },
+                                        orElse: () => appointments.isNotEmpty ? appointments.first : null!,
+                                      );
+                                    } catch (e) {
+                                      print('Error finding active appointment: $e');
+                                      activeAppointment = null;
+                                    }
+                                    
+                                    if (activeAppointment != null) {
+                                      // Calculate time difference
+                                      final appointmentTime = activeAppointment.appointmentDate;
+                                      final timeDifference = appointmentTime.difference(now).inMinutes.abs();
+                                      
+                                      // Allow chat if within 15 minutes of appointment time or after appointment time
+                                      if (timeDifference <= 15 || now.isAfter(appointmentTime)) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => DoctorChatScreen(
+                                              doctorId: doctor.id,
+                                              doctorName: doctor.name,
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text('Your appointment is scheduled for ${DateFormat('MMM dd, yyyy - hh:mm a').format(appointmentTime)}. Chat will be available 15 minutes before appointment time.'),
+                                            backgroundColor: Colors.orange,
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Could not find your appointment details. Please try again.'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    }
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('You need an active appointment to chat with this doctor.'),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                  }
+                                },
+                                icon: const Icon(Icons.chat_outlined),
+                                label: const Text('Chat'),
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
