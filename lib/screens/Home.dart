@@ -185,7 +185,6 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildDrawer(BuildContext context) {
     final theme = Theme.of(context);
-    final screenWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder<Map<String, String?>?>(
       future: AuthenticationBloc.readAuth(),

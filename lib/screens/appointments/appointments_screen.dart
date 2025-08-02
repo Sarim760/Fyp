@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import '../../model/appointment.dart';
 import '../../service/appointment_service.dart';
 import '../../screens/chat/doctor_chat_screen.dart';
@@ -103,7 +102,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> with SingleTick
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.white,
-          labelColor: Colors.green,
           indicatorWeight: 3,
           labelStyle: TextStyle(fontWeight: FontWeight.w600),
           unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
