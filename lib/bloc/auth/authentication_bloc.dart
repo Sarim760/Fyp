@@ -79,7 +79,7 @@ class AuthenticationBloc
 
         if (response.statusCode == 200 || response.statusCode == 201) {
           final data = response.data;
-          final user = data['user'] ?? {};
+          final user = Map<String, dynamic>.from(data['user'] ?? {});
           final token = data['token'] ?? '';
           await _saveAuth(token, user);
           emit(AuthenticationSuccess(message: data['message']));
@@ -96,6 +96,7 @@ class AuthenticationBloc
       }
     });
   }
+// Update the signupEvent handler
 
   void loginEvent() {
     return on<LoginEvent>((event, emit) async {
@@ -113,7 +114,7 @@ class AuthenticationBloc
         if (response.statusCode == 200 || response.statusCode == 201) {
           final data = response.data;
           final token = data['token'];
-          final user = data['user'];
+          final user = Map<String, dynamic>.from(data['user']);
           await _saveAuth(token, user);
           emit(AuthenticationSuccess(message: 'Login Successful'));
         } else {

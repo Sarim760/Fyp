@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../screens/appointments/appointments_screen.dart';
+import '../../screens/scan_plant_screen.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -283,11 +284,9 @@ class _HomeWidgetState extends State<HomeWidget> {
       child: InkWell(
         onTap: () {
           if (title == 'Scan Plant') {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              builder: (context) => const Diagnosis(),
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ScanPlantScreen()),
             );
           } else if (title == 'Appointments') {
             Navigator.push(

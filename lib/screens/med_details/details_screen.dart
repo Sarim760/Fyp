@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../helper/constants.dart';
 import '../../model/medicine.dart';
@@ -46,16 +47,17 @@ class DetailsScreen extends StatelessWidget {
                   child: Container(
                     color: Colors.white,
                     alignment: Alignment.center,
-                    child: Image.network(
-                      product.image,
+                    child: CachedNetworkImage(
+                      imageUrl: product.image,
                       fit: BoxFit.contain,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return const Center(child: CircularProgressIndicator());
-                      },
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(Icons.error_outline, size: 60, color: Colors.red);
-                      },
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.error_outline,
+                        size: 60,
+                        color: Colors.red,
+                      ),
                     ),
                   ),
                 ),

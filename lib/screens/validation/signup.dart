@@ -63,7 +63,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   duration: const Duration(milliseconds: 100),
                 )
             ).show(context);
-            Navigator.pushReplacementNamed(context, '/home');
+             Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/home',
+              (route) => false,
+            );
           }
         },
         builder: (context, state) {
