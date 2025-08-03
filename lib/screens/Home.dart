@@ -2,7 +2,7 @@ import 'package:aiplant/screens/store/marketplace.dart';
 import 'package:aiplant/widgets/Doctor.dart';
 import 'package:aiplant/widgets/Home_widget.dart';
 import 'package:aiplant/widgets/diagnosis.dart';
-import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
+import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import 'package:delightful_toast/delight_toast.dart';
 import 'package:delightful_toast/toast/components/toast_card.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +11,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
+import 'favorites/favorites_screen.dart';
+import 'settings_screen.dart';
 
 import '../bloc/auth/authentication_bloc.dart';
 import '../widgets/cart/cart_bottom_sheet.dart';
@@ -31,9 +33,9 @@ class _HomePageState extends State<HomePage> {
     const HomeWidget(),
     const DoctorsScreen(),
     const Marketplace(),
-    const Center(child: Text('Settings'),)
+    const SettingsScreen()
   ];
-  final _bottomBarController = BottomBarWithSheetController(initialIndex: 0);
+
 
   @override
   void dispose() {
@@ -100,7 +102,25 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            actions: [],
+            actions: _currentIndex == 2 
+                ? [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FavoritesScreen(),
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.favorite_outline,
+                        color: Colors.red,
+                        size: 24,
+                      ),
+                    ),
+                  ]
+                : [],
           ),
           body: SafeArea(
             child: Padding(
@@ -156,26 +176,54 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 )
-              : null,
-          bottomNavigationBar: BottomBarWithSheet(
-            controller: _bottomBarController,
-            onSelectItem: (index) => setState(() => _currentIndex = index),
-            bottomBarTheme: const BottomBarTheme(
-              mainButtonPosition: MainButtonPosition.middle,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+              : _currentIndex == 0
+                  ? FloatingActionButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => Container(
+                            height: MediaQuery.of(context).size.height * 0.8,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                            ),
+                            child: const Center(child: Diagnosis()),
+                          ),
+                        );
+                      },
+                      backgroundColor: Theme.of(context).primaryColor,
+                      child: const Icon(Icons.camera_alt, color: Colors.white),
+                    )
+                  : null,
+          bottomNavigationBar: WaterDropNavBar(
+            backgroundColor: Colors.white,
+            waterDropColor: Theme.of(context).primaryColor,
+            inactiveIconColor: Colors.grey,
+            onItemSelected: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            selectedIndex: _currentIndex,
+            barItems: [
+              BarItem(
+                filledIcon: Icons.home,
+                outlinedIcon: Icons.home_outlined,
               ),
-              itemIconColor: Colors.grey,
-              itemTextStyle: TextStyle(color: Colors.grey, fontSize: 10),
-              selectedItemTextStyle: TextStyle(color: Colors.blue, fontSize: 10),
-            ),
-            sheetChild: Center(child: Diagnosis()),
-            items: const [
-              BottomBarWithSheetItem(icon: Icons.home_filled),
-              BottomBarWithSheetItem(icon: Icons.medical_services_outlined),
-              BottomBarWithSheetItem(icon: Icons.shop),
-              BottomBarWithSheetItem(icon: Icons.shopping_cart_sharp),
+              BarItem(
+                filledIcon: Icons.medical_services,
+                outlinedIcon: Icons.medical_services_outlined,
+              ),
+              BarItem(
+                filledIcon: Icons.shop,
+                outlinedIcon: Icons.shop_outlined,
+              ),
+              BarItem(
+                filledIcon: Icons.settings,
+                outlinedIcon: Icons.settings_outlined,
+              ),
             ],
           ),
         ),
@@ -249,7 +297,10 @@ class _HomePageState extends State<HomePage> {
                         icon: Icons.home_rounded,
                         title: 'Home',
                         theme: theme,
-                        onTap: () => Navigator.pop(context),
+                         onTap: () { 
+                          Navigator.pushNamed(context, '/home');
+                          },
+                       
                       ),
                       _buildDrawerItem(
                         context,
@@ -276,7 +327,7 @@ class _HomePageState extends State<HomePage> {
                         title: 'Settings',
                         theme: theme,
                         onTap: () {
-                          Navigator.pop(context);
+                           Navigator.pushNamed(context, '/settings');
                         },
                       ),
                       const Padding(

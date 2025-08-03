@@ -103,6 +103,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> with SingleTick
           controller: _tabController,
           indicatorColor: Colors.white,
           indicatorWeight: 3,
+          labelColor: Colors.white,
           labelStyle: TextStyle(fontWeight: FontWeight.w600),
           unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
           tabs: const [
@@ -176,6 +177,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> with SingleTick
                       ),
                     )
                   : TabBarView(
+                    
                       controller: _tabController,
                       children: [
                         _buildAppointmentList(_getFilteredAppointments('all')),

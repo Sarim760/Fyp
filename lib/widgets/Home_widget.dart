@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../screens/appointments/appointments_screen.dart';
+import '../../screens/plant_care.dart';
+import '../../screens/scan_plant.dart';
+import '../../screens/we_care_screen.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -226,9 +229,9 @@ class _HomeWidgetState extends State<HomeWidget> {
         'color': Colors.green.shade100,
       },
       {
-        'title': 'My Garden',
-        'icon': Icons.yard,
-        'color': Colors.lightGreen.shade100,
+        'title': 'Plant Wiki',
+        'icon': Icons.favorite,
+        'color': Colors.pink.shade100,
       },
       {
         'title': 'Plant Care',
@@ -283,19 +286,25 @@ class _HomeWidgetState extends State<HomeWidget> {
       child: InkWell(
         onTap: () {
           if (title == 'Scan Plant') {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              builder: (context) => const Diagnosis(),
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ScanPlantScreen()),
             );
           } else if (title == 'Appointments') {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const AppointmentsScreen()),
             );
+          } else if (title == 'Plant Wiki') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const WeCareScreen()),
+            );
           } else if (title == 'Plant Care') {
-            // Handle Plant Care action
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const PlantCareScreen()),
+            );
           }
         },
         borderRadius: BorderRadius.circular(16),

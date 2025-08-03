@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import '../../../helper/constants.dart';
 import '../../../model/medicine.dart';
 
-class ColorAndSize extends StatelessWidget {
+class ColorAndSize extends StatefulWidget {
   const ColorAndSize({super.key, required this.product});
 
   final medicine product;
+
+  @override
+  State<ColorAndSize> createState() => _ColorAndSizeState();
+}
+
+class _ColorAndSizeState extends State<ColorAndSize> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,8 +31,8 @@ class ColorAndSize extends StatelessWidget {
                     const Icon(Icons.star, color: Colors.amber, size: 20),
                     const SizedBox(width: 4),
                     Text(
-                      product.rating != null
-                          ? "${product.rating!.rate} (${product.rating!.count} reviews)"
+                      widget.product.rating != null
+                          ? "${widget.product.rating!.rate} (${widget.product.rating!.count} reviews)"
                           : "No ratings",
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -44,7 +50,7 @@ class ColorAndSize extends StatelessWidget {
               children: [
                 const TextSpan(text: "Category\n"),
                 TextSpan(
-                  text: product.category,
+                  text: widget.product.category,
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
