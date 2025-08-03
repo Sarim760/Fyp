@@ -133,7 +133,7 @@ class _ScanPlantScreenState extends State<ScanPlantScreen> {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'No image selected',
+                          'No images selected',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: theme.colorScheme.outline,
                           ),
@@ -142,6 +142,7 @@ class _ScanPlantScreenState extends State<ScanPlantScreen> {
                     ),
                   ),
             const SizedBox(height: 15),
+
             Row(
               children: [
                 Expanded(
