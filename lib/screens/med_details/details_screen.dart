@@ -10,11 +10,16 @@ import 'components/color_and_size.dart';
 import 'components/counter_with_fav_btn.dart';
 import 'components/description.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends StatefulWidget {
   const DetailsScreen({super.key, required this.product});
 
   final medicine product;
 
+  @override
+  State<DetailsScreen> createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +38,7 @@ class DetailsScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: kDefaultPaddin / 2),
                 child: FavoriteButton(
-                  product: product,
+                  product: widget.product,
                 ),
               ),
             ],
@@ -43,12 +48,12 @@ class DetailsScreen extends StatelessWidget {
               background: SafeArea(
                 bottom: false,
                 child: Hero(
-                  tag: "${product.id}",
+                  tag: "${widget.product.id}",
                   child: Container(
                     color: Colors.white,
                     alignment: Alignment.center,
                     child: CachedNetworkImage(
-                      imageUrl: product.image,
+                      imageUrl: widget.product.image,
                       fit: BoxFit.contain,
                       placeholder: (context, url) => const Center(
                         child: CircularProgressIndicator(),
@@ -72,12 +77,12 @@ class DetailsScreen extends StatelessWidget {
                 children: [
                   // Title & price
                   Text(
-                    product.category.toUpperCase(),
+                    widget.product.category.toUpperCase(),
                     style: const TextStyle(color: Colors.black54),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    product.title,
+                    widget.product.title,
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!
@@ -85,18 +90,18 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: kDefaultPaddin / 2),
                   Text(
-                    "\$${product.price.toStringAsFixed(2)}",
+                    "\$${widget.product.price.toStringAsFixed(2)}",
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall!
                         .copyWith(color: Colors.blue, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: kDefaultPaddin),
-                  ColorAndSize(product: product),
+                  ColorAndSize(product: widget.product),
                   const SizedBox(height: kDefaultPaddin),
-                  Description(product: product),
+                  Description(product: widget.product),
                   const SizedBox(height: kDefaultPaddin),
-                  CounterWithFavBtn(product: product),
+                  CounterWithFavBtn(product: widget.product),
                   const SizedBox(height: kDefaultPaddin * 2), // extra space for bottom bar
                 ],
               ),
@@ -107,7 +112,7 @@ class DetailsScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin, vertical: kDefaultPaddin / 2),
-          child: AddToCart(product: product),
+          child: AddToCart(product: widget.product),
         ),
       ),
     );

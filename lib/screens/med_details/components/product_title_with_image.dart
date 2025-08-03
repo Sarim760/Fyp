@@ -4,10 +4,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../../helper/constants.dart';
 import '../../../model/medicine.dart';
 
-class ProductTitleWithImage extends StatelessWidget {
+class ProductTitleWithImage extends StatefulWidget {
   const ProductTitleWithImage({super.key, required this.product});
 
   final medicine product;
+
+  @override
+  State<ProductTitleWithImage> createState() => _ProductTitleWithImageState();
+}
+
+class _ProductTitleWithImageState extends State<ProductTitleWithImage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,11 +22,11 @@ class ProductTitleWithImage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            product.category.toUpperCase(),
+            widget.product.category.toUpperCase(),
             style: const TextStyle(color: Colors.black54),
           ),
           Text(
-            product.title,
+            widget.product.title,
             style: Theme.of(context)
                 .textTheme
                 .titleLarge!
@@ -34,7 +40,7 @@ class ProductTitleWithImage extends StatelessWidget {
                   children: [
                     const TextSpan(text: "Price\n"),
                     TextSpan(
-                      text: "\$${product.price.toStringAsFixed(2)}",
+                      text: "\$${widget.product.price.toStringAsFixed(2)}",
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!
@@ -47,9 +53,9 @@ class ProductTitleWithImage extends StatelessWidget {
               const SizedBox(width: kDefaultPaddin),
               Expanded(
                 child: Hero(
-                  tag: "${product.id}",
+                  tag: "${widget.product.id}",
                   child: CachedNetworkImage(
-                    imageUrl: product.image,
+                    imageUrl: widget.product.image,
                     fit: BoxFit.contain,
                     placeholder: (context, url) => const Center(
                       child: CircularProgressIndicator(),

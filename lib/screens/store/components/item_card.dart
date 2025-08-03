@@ -57,7 +57,14 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                 ),
-
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: FavoriteButton(
+                    product: product,
+                    size: 28,
+                  ),
+                ),
               ],
             ),
           ),
