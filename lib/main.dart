@@ -1,38 +1,62 @@
-import 'package:aiplant/screens/splash_screen.dart';
+import 'package:aiplant/bloc/auth/authentication_bloc.dart';
+import 'package:aiplant/providers/product_provider.dart';
+import 'package:aiplant/providers/cart_provider.dart';
+import 'package:aiplant/providers/theme_provider.dart';
+import 'package:aiplant/screens/Home.dart';
+import 'package:aiplant/screens/Onboard.dart';
+import 'package:aiplant/screens/validation/login.dart';
+import 'package:aiplant/screens/splash.dart';
+import 'package:aiplant/screens/validation/signup.dart';
+import 'package:aiplant/screens/welcome.dart';
+import 'package:aiplant/screens/chat/chat_page.dart';
+import 'package:aiplant/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: FirebaseOptions(
-    apiKey: "AIzaSyCcMGD2c4M6IuAK5SG0NXRSOLid2xmCuaA",
-    appId: "1:894903813282:android:267bccd6ad51b099d303fb",
-    messagingSenderId: "894903813282",
-    projectId: "fyppart1-bbb83",
-  ));
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        colorScheme: ColorScheme.light(
-          primary: Color(0xFF2E7D32), // Deep botanical green
-          secondary: Color(0xFF8BC34A), // Leaf green
-          background: Color(0xFFF5F5F5), // Light gray
-        ),
-        textTheme: TextTheme(
-          headlineLarge: TextStyle(color: Color(0xFF212121)), // Dark gray text
-        ),
-      ),
-      home: SplashScreen(),
-    );
+    return MultiBlocProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => ProductProvider()..initialize(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => CartProvider()..refreshCart(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ThemeProvider(),
+          ),
+          BlocProvider(create: (context) => AuthenticationBloc()),
+        ],
+        child: Consumer<ThemeProvider>(
+          builder: (context, themeProvider, child) {
+            return MaterialApp(
+              initialRoute: '/splash',
+              routes: {
+                '/splash': (context) => const SplashScreen(),
+                '/onboard': (context) => const OnBoardScreen(),
+                '/welcome': (context) => const WelcomeScreen(),
+                '/login': (context) => const LoginScreen(),
+                '/signup': (context) => const RegistrationScreen(),
+                '/home': (context) => const HomePage(),
+                '/chat': (context) => const ChatPage(),
+                '/settings': (context) => const SettingsScreen(),
+                
+              },
+              theme: themeProvider.getLightTheme(),
+              darkTheme: themeProvider.getDarkTheme(),
+              themeMode: themeProvider.themeMode,
+            );
+          },
+        ));
   }
 }
