@@ -361,10 +361,8 @@ class _HomePageState extends State<HomePage> {
         ),
         elevation: 2,
       ),
-      child: const Text(
-        'Diagnose Plant',
-        style: TextStyle(fontSize: 16),
-      ),
+
+
     );
   }
 }
